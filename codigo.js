@@ -1,5 +1,5 @@
 var mapaInicial=[];
-
+var probando_comit = "test";
 const input = 
     document.querySelector('input[type="file"]')
     input.addEventListener('change',function (e) {
