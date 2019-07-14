@@ -8,4 +8,10 @@ const input =
         reader.onload = function () {
             const lines = reader.result.split('\n').map(function(line){
                 document.write(line);
-                mapaInicial.push[line
+                mapaInicial.push[line];
+            })
+            document.write(mapaInicial[0]);
+        }
+        reader.readAsText(input.files[0]);
+    },false)
+
