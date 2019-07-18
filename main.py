@@ -112,9 +112,10 @@ def make_move(f,c,dir):
 
 def configconsola(tab):
     tableroConsole = [i[:] for i in tab]
-    tableroConsole[jugadorpos[0]][jugadorpos[1]] = 'J'
+    tableroConsole[jugadorpos[0]][jugadorpos[1]] = '‡'
     for box in cajaspos:
-        tableroConsole[box[0]][box[1]] = 'C'
+        tableroConsole[box[0]][box[1]] = '▥' #'C' □ ▥
+
     return tableroConsole
 
 def juegoconsola(a):
@@ -145,6 +146,5 @@ drawtablero(configconsola(tablero))
 juegoconsola(True)
 
 print(cajaspos)
-print(cajaspos.reverse())
 print(metas)
 print(jugadorpos)
