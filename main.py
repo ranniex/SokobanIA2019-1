@@ -85,10 +85,10 @@ def winmessage():
     print("#                           #")
     print("#############################")
 
-def iswin():
+def iswin(metasW, cajasposW):
     rp = True
-    for m in metas:
-        if not cajaspos.__contains__(m):
+    for m in metasW:
+        if not cajasposW.__contains__(m):
             rp = False
     return rp
 
@@ -137,14 +137,41 @@ def juegoconsola(a):
                 make_move(jf,jc+1,'R')
         print("#################################")
         drawtablero(configconsola(tablero))
-        if iswin():
+        if iswin(metas,cajaspos):
             winmessage()
             break
 
-leertxt('nivel1.txt')
-drawtablero(configconsola(tablero))
-juegoconsola(True)
+def agente():
+    nodo = [ [jugadorpos[0],jugadorpos[1]], [i[:] for i in cajaspos], ['']]
+    cola = []
+    cola.append(nodo)
 
-print(cajaspos)
-print(metas)
-print(jugadorpos)
+    for n in cola:
+        print(n)
+        if iswin(metas,n[1]):
+            return n[2]
+        jf = n[0][0]
+        jc = n[0][1]
+        if valid_move(jf-1,jc,'U'):
+            make_move(jf-1,jc,'U')
+            n[2][0] +='U'
+        elif valid_move(jf+1,jc,'D'):
+            make_move(jf+1,jc,'D')
+            n[2][0] +='D'
+        elif valid_move(jf,jc-1,'L'):
+            make_move(jf,jc-1,'L')
+            n[2][0] +='L'
+        elif valid_move(jf,jc+1,'R'):
+            make_move(jf,jc+1,'R')
+            n[2][0] +='R'
+        ns = [ [jugadorpos[0],jugadorpos[1]], [i[:] for i in cajaspos], n[2]]
+        cola.append(ns)
+    return "404"
+
+leertxt('nivel1.txt')
+#drawtablero(configconsola(tablero))
+#juegoconsola(True)
+print(agente())
+#print(cajaspos)
+#print(metas)
+#print(jugadorpos)
