@@ -147,10 +147,8 @@ def agente():
     for n in cola:
         jf = n[0][0]
         jc = n[0][1]
-        #print(cajaspos)
         #cajaspos[0] = [i[:] for i in n[1]]
         controlMov = n[2][len(n[2])-1]
-        #print(controlMov)
         if (controlMov == 'U'):
             make_move(jf,jc,'U')
         if(controlMov == 'D'):
@@ -159,7 +157,7 @@ def agente():
             make_move(jf,jc,'L')
         if(controlMov == 'R'):
             make_move(jf,jc,'R')
-        if (contador == 2):
+        if (contador == 3):
             for alg in cola:
                 print("Estamos en un estado:")
                 print(alg, '\n')
@@ -169,10 +167,6 @@ def agente():
         n[0] =[jugadorpos[0],jugadorpos[1]] #posicion del jugador actualizada despues de hacer movimiento
         n[1] = [i[:] for i in cajaspos]     #posicion de las cajas actualizada despues de hacer movimiento
 
-
-        #if (contador == 0 or contador == 1 or contador == 0 ):
-            #print(cola)
-            
 
         if iswin(metas,n[1]):
             return n
