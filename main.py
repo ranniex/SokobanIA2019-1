@@ -117,7 +117,6 @@ def configconsola(tab):
         tableroConsole[box[0]][box[1]] = '▥' #'C' □ ▥
 
     return tableroConsole
-
 def juegoconsola(a):
     while(a):
         jf = jugadorpos[0]
@@ -138,40 +137,77 @@ def juegoconsola(a):
         print("#################################")
         drawtablero(configconsola(tablero))
         if iswin(metas,cajaspos):
-            winmessage()
-            break
+            return "Ganaste prro" #winmessage()
 
 def agente():
     nodo = [ [jugadorpos[0],jugadorpos[1]], [i[:] for i in cajaspos], ['']]
     cola = []
     cola.append(nodo)
-
+    contador = 0
     for n in cola:
-        print(n)
-        if iswin(metas,n[1]):
-            return n[2]
         jf = n[0][0]
         jc = n[0][1]
+        #print(cajaspos)
+        #cajaspos[0] = [i[:] for i in n[1]]
+        controlMov = n[2][len(n[2])-1]
+        #print(controlMov)
+        if (controlMov == 'U'):
+            make_move(jf,jc,'U')
+        if(controlMov == 'D'):
+            make_move(jf,jc,'D')
+        if(controlMov == 'L'):
+            make_move(jf,jc,'L')
+        if(controlMov == 'R'):
+            make_move(jf,jc,'R')
+        if (contador == 2):
+            for alg in cola:
+                print("Estamos en un estado:")
+                print(alg, '\n')
+                print("Y las metas son:")
+                print(metas, '\n')
+            break
+        n[0] =[jugadorpos[0],jugadorpos[1]] #posicion del jugador actualizada despues de hacer movimiento
+        n[1] = [i[:] for i in cajaspos]     #posicion de las cajas actualizada despues de hacer movimiento
+
+
+        #if (contador == 0 or contador == 1 or contador == 0 ):
+            #print(cola)
+            
+
+        if iswin(metas,n[1]):
+            return n
+
+
         if valid_move(jf-1,jc,'U'):
-            make_move(jf-1,jc,'U')
-            n[2][0] +='U'
-        elif valid_move(jf+1,jc,'D'):
-            make_move(jf+1,jc,'D')
-            n[2][0] +='D'
-        elif valid_move(jf,jc-1,'L'):
-            make_move(jf,jc-1,'L')
-            n[2][0] +='L'
-        elif valid_move(jf,jc+1,'R'):
-            make_move(jf,jc+1,'R')
-            n[2][0] +='R'
-        ns = [ [jugadorpos[0],jugadorpos[1]], [i[:] for i in cajaspos], n[2]]
-        cola.append(ns)
+            ns = [i[:] for i in n]
+            ns[0][0]=jf-1
+            ns[0][1]=jc
+            ns[2].insert(len(n[2]),'U')
+            cola.append(ns)
+        if valid_move(jf+1,jc,'D'):   
+            ns = [i[:] for i in n]
+            ns[0][0]=jf+1
+            ns[0][1]=jc
+            ns[2].insert(len(n[2]),'D')        
+            cola.append(ns)
+        if valid_move(jf,jc-1,'L'):  
+            ns = [i[:] for i in n]
+            ns[0][0]=jf
+            ns[0][1]=jc-1
+            ns[2].insert(len(n[2]),'L')                 
+            cola.append(ns)
+        if valid_move(jf,jc+1,'R'):
+            #ns = [ [jugadorpos[0],jugadorpos[1]], [i[:] for i in cajaspos], n[2]]
+            ns = [i[:] for i in n]
+            ns[0][0]=jf
+            ns[0][1]=jc+1
+            ns[2].insert(len(n[2]),'R')                
+            cola.append(ns)
+        contador = 1 + contador
     return "404"
 
 leertxt('nivel1.txt')
-#drawtablero(configconsola(tablero))
-#juegoconsola(True)
+
+
 print(agente())
-#print(cajaspos)
-#print(metas)
-#print(jugadorpos)
+
